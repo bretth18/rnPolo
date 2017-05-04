@@ -4,8 +4,8 @@ import {
 } from 'react-native'
 
 import { Provider } from 'react-redux'
-import configureStore from './configureStore'
-import App from '/App/app'
+import configureStore from './App/configureStore'
+import App from './App/app'
 
 const store = configureStore()
 
@@ -15,4 +15,4 @@ const ReduxApp = () => (
   </Provider>
 )
 
-AppRegistry.registerComponent('redux4ways', () => ReduxApp);
+AppRegistry.registerComponent('rnPolo', () => ReduxApp);

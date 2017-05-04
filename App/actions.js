@@ -1,5 +1,6 @@
 
 import { FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE } from './constants'
+import getChat from './api'
 
 export function getData() {
   return {
@@ -20,4 +21,13 @@ export function getDataFailure() {
   }
 }
 
-export function fetchData() {}
+export function fetchData() {
+  return (dispatch) => {
+    dispatch(getData())
+    getChat()
+      .then((data) => {
+        dispatch(getDataSuccess(data))
+      })
+      .catch((err) => console.log('error:',err))
+  }
+}

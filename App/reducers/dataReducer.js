@@ -5,7 +5,7 @@ const initialState = {
   dataFetched: false,
   isFetching: false,
   error: false
-}
+};
 
 export default function dataReducer (state = initialState, action) {
   switch (action.type) {
@@ -30,5 +30,4 @@ export default function dataReducer (state = initialState, action) {
     default:
       return state
   }
-}
-view rawdataReducer.js hosted with ❤ by GitHub
+};
