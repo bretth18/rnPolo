@@ -1,6 +1,16 @@
 
-import { FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE } from './constants'
-import getChat from './api'
+import {
+  FETCHING_DATA,
+  FETCHING_DATA_SUCCESS,
+  FETCHING_DATA_FAILURE,
+  CHAT_MESSAGE,
+  CONNECT,
+  DISCONNECT,
+  SEND_CHAT_MESSAGE,
+  CONNECTING,
+ } from './constants'
+import { getChat, getWebSocket } from './api'
+
 
 export function getData() {
   return {
@@ -21,10 +31,51 @@ export function getDataFailure() {
   }
 }
 
+
+// WSS
+
+
+
+// socket middleware - redo
+export function connecting() {
+  return {
+    type: CONNECTING
+  }
+}
+export function connected() {
+  return {
+    type: CONNECT
+  }
+}
+
+export function disconnected() {
+  return {
+    type: DISCONNECT
+  }
+}
+
+export function messageReceived(msg) {
+  return {
+    type: CHAT_MESSAGE,
+    msg,
+  }
+}
+
+
+export function fetchSocketData() {
+  return (dispatch) => {
+    dispatch(connecting())
+    getWsData()
+      .then((data) => {
+        dispatch(getDataSuccess(data))
+      })
+      .catch((err) => console.log('error: ', err))
+  }
+}
 export function fetchData() {
   return (dispatch) => {
     dispatch(getData())
-    getChat()
+    getData()
       .then((data) => {
         dispatch(getDataSuccess(data))
       })

@@ -1,7 +1,4 @@
-// import wamp from 'wamp.js';
-//
-//
-//
+
 // function wampino() {
 //   var wsuri = "wss://api.poloniex.com";
 //   var connection = new wamp.Connection({
@@ -33,11 +30,9 @@
 //
 // var doto = wampino();
 
-// plnx.push(function(session) {
-//   session.subscribe("trollbox", function(chatData){
-//     console.log(chatData);
-//   });
-// });
+// CONSTANTS
+var POLO_ENDPOINT = 'api.poloniex.co';
+
 async function getPriceData() {
   try {
     let response = await fetch('https://poloniex.com/public?command=returnTicker');
@@ -50,10 +45,46 @@ async function getPriceData() {
 }
 
 
-async funtion getTransactionData() {
-  try {
-    
+// WS
+ function setWebSocket(endpoint, sessionToken) {
+  if (sessionToken === 'trollbox') {
+    const ws = new WebSocket('wss://' + endPoint + '/' + sessionToken);
+  } else {
+    const ws = new WebSocket('wss://' + endPoint + '/api/live?authToken=' + sessionToken);
   }
+  console.log('Setting socket: ' + 'wss://' + endpoint + '/api/live?authToken=' + sessionToken);
+
+  return ws;
+}
+
+
+export function getWebSocket(sessionToken) {
+  // set up
+  setWebSocket(POLO_ENDPOINT, sessionToken);
+
+  ws.onopen = () => {
+    // subscribe to updates, call action
+    console.log('ws openened');
+  };
+
+  ws.onmessage = (e) => {
+    // handle data w/ redux and set state?
+    // should be handled in component likely
+    console.log(e.data);
+  };
+
+  ws.onerror = (e) => {
+  // an error occurred
+  console.log(e.message);
+  };
+
+  ws.onclose = (e) => {
+  // connection closed
+  console.log(e.code, e.reason);
+  };
+
+
+
 }
 
 // console.log('chatdata: ', tickerEvent);

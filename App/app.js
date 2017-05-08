@@ -1,8 +1,9 @@
 import React from 'react'
 import { TouchableHighlight, View, Text, StyleSheet } from 'react-native'
 
-import { connect } from 'react-redux'
-import { fetchData } from './actions'
+import { connect } from 'react-redux';
+import { fetchData } from './actions';
+import { getWebSocket } from './api';
 
 let styles
 
