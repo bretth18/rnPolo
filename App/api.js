@@ -50,6 +50,12 @@ async function getPriceData() {
 }
 
 
+async funtion getTransactionData() {
+  try {
+    
+  }
+}
+
 // console.log('chatdata: ', tickerEvent);
 export default () => {
   return getPriceData();
