@@ -8,77 +8,60 @@ import {
   DISCONNECT,
   SEND_CHAT_MESSAGE,
   CONNECTING,
- } from './constants'
-import { getChat, getWebSocket } from './api'
+} from './constants';
 
+// import { fetchPublicMethod } from '/api';
 
-export function getData() {
+// export function getData() {
+//   return {
+//     type: FETCHING_DATA
+//   };
+// }
+
+export function dataFetchSuccess(data) {
   return {
-    type: FETCHING_DATA
-  }
-}
-
-export function getDataSuccess(data) {
-  return {
-    type: FETCHING_DATA_SUCCESS,
+    type: 'FETCHING_DATA_SUCCESS',
     data,
-  }
+  };
 }
 
-export function getDataFailure() {
+export function getDataFailure(bool) {
   return {
-    type: FETCHING_DATA_FAILURE
-  }
+    type: 'FETCHING_DATA_FAILURE',
+    hasErrored: bool
+  };
 }
 
-
-// WSS
-
-
-
-// socket middleware - redo
-export function connecting() {
+export function dataIsLoading(bool) {
   return {
-    type: CONNECTING
-  }
-}
-export function connected() {
-  return {
-    type: CONNECT
-  }
-}
-
-export function disconnected() {
-  return {
-    type: DISCONNECT
-  }
-}
-
-export function messageReceived(msg) {
-  return {
-    type: CHAT_MESSAGE,
-    msg,
-  }
+    type: 'DATA_IS_LOADING',
+    isLoading: bool
+  };
 }
 
 
-export function fetchSocketData() {
+
+
+// async using redux idk not clean
+export function dataFetchData(url) {
   return (dispatch) => {
-    dispatch(connecting())
-    getWsData()
-      .then((data) => {
-        dispatch(getDataSuccess(data))
-      })
-      .catch((err) => console.log('error: ', err))
-  }
-}
-export function fetchData() {
-  return (dispatch) => {
-    dispatch(getData())
-    getData()
-      .then((data) => {
-        dispatch(getDataSuccess(data))
-      })
-      .catch((err) => console.log('error:',err))
-  }
+    dispatch(dataIsLoading(true));
+
+    fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            console.log(response);
+            throw Error(response.statusText);
+          }
+
+          dispatch(dataIsLoading(false));
+
+          return response;
+          console.log('hey');
+        })
+        .then((response) => response.json())
+        .then((data) => dispatch(dataFetchSuccess(data)))
+        .catch(() => dispatch(getDataFailure(true)));
+
+  };
 }

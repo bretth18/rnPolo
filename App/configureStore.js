@@ -1,9 +1,12 @@
 import { createStore, applyMiddleware } from 'redux'
 import app from './reducers'
-import socketMiddleware from './Middleware/socket'
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
+import { composeWithDevTools } from 'remote-redux-devtools';
 
 export default function configureStore() {
-  let store = createStore(app, applyMiddleware(thunk, socketMiddleware))
-  return store
+
+  const store = createStore(app, composeWithDevTools(
+    applyMiddleware(thunk,logger)));
+  return store;
 }

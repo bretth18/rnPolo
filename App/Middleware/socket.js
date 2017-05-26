@@ -1,7 +1,7 @@
-import actions from '../actions'
+import actions from './actions'
 
 const socketMiddleware = (function(){
-  var socket = 'wss://api.poloniex.co';
+  var socket = null;
 
   const onOpen = (ws,store,token) => evt => {
     //Send a handshake, or authenticate with remote end

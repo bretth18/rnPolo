@@ -41,6 +41,7 @@ function generateHmac(authToken) {
 
 async function fetchPrivateMethod(authToken, method) {
   try {
+
     generateHmac(authToken);
 
     fetch('https://poloniex.com/tradingApi', {
