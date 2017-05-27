@@ -3,6 +3,8 @@ import { TouchableHighlight, View, Text, StyleSheet } from 'react-native'
 
 import { connect } from 'react-redux';
 import { dataFetchData } from './actions';
+import { VictoryBar, VictoryChart, VictoryAxis,
+        VictoryTheme } from 'victory-native';
 
 
 
@@ -42,9 +44,20 @@ class App extends Component {
         {this.props.appData.data.map((data) => (
             <View key={data.id}>
                 <Text> PRICE: {data.USDT_BTC.last} </Text>
+                <Text> 24hrHIGH: {data.USDT_BTC.high24hr} </Text>
             </View>
         ))}
     </View>
+    <VictoryChart>
+      <VictoryBar
+        style={{
+          data: {fill: "blue"}
+        }}
+        data={this.props.appData.data}
+        x="quarter"
+        y="earnings"
+      />
+    </VictoryChart>
   </View>
     );
 

@@ -1,6 +1,10 @@
 package com.rnpolo;
 
 import com.facebook.react.ReactActivity;
+import com.tradle.react.UdpSocketsModule;
+import com.peel.react.TcpSocketsModule;
+import com.horcrux.svg.SvgPackage;
+import com.peel.react.rnos.RNOSModule;
 
 public class MainActivity extends ReactActivity {
 
